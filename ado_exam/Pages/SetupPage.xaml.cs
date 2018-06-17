@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data;
 
 namespace ado_exam.Pages
 {
@@ -42,9 +43,13 @@ namespace ado_exam.Pages
             try
             {
                 connection.Open();
-                if (connection.State.ToString().ToLower() == "open")
+                if (connection.State == ConnectionState.Open)
                 {
-                    ConfigurationManager.ConnectionStrings["VacanciesConnection"].ConnectionString = newConnectionString;
+                    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+                    connectionStringsSection.ConnectionStrings["VacanciesConnection"].ConnectionString = newConnectionString;
+                    config.Save();
+                    ConfigurationManager.RefreshSection("connectionStrings");
                     MessageBox.Show("Cтрока подключения успешно изменена", "Connection string change", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
                 else
