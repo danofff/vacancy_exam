@@ -37,7 +37,7 @@ namespace ado_exam.Pages
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            string newConnectionString = @"Data Source=" + @ServerName.Text + ";Initial Catalog=" + DBName.Text + ";User ID=" + UserName.Text + ";Password=" + Password.Password;
+            string newConnectionString = @"Data Source=" + @ServerName.Text + ";Initial Catalog=" + DBName.Text + ";User ID=" + UserName.Text + ";Password=" + Password.Password+ ";MultipleActiveResultSets=True;App=EntityFramework";
             SqlConnection connection = new SqlConnection(newConnectionString);
             try
             {
